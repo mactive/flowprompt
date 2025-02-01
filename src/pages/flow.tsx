@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ReactFlow, NodeTypes, EdgeTypes, Node, Edge, Position } from '@xyflow/react';
+import { ReactFlow, Node, Edge, Position } from '@xyflow/react';
 import type { Prompt } from '@/types/prompt';
  
 import '@xyflow/react/dist/style.css';
+
+interface StructureValue {
+  en: string[];
+  cn: string[];
+}
 
 const generateNodesAndEdges = (promptData: Prompt) => {
   const nodes: Node[] = [];
@@ -80,20 +85,20 @@ const generateNodesAndEdges = (promptData: Prompt) => {
       : promptData.structure;
 
     // 过滤掉没有内容的字段
-    const validStructureEntries = Object.entries(structure)
-      .filter(([_, value]: [string, any]) => 
+    const validStructureEntries = (Object.entries(structure) as [string, StructureValue][])
+      .filter(([, value]) => 
         value.en && Array.isArray(value.en) && value.en.length > 0
       );
 
     // 计算所有第三层节点的总数，用于整体布局
-    let totalThirdLevelNodes = validStructureEntries.reduce((sum, [_, value]) => 
+    const totalThirdLevelNodes = validStructureEntries.reduce((sum, [, value]: [string, StructureValue]) => 
       sum + value.en.length, 0
     );
 
     let currentYPosition = 300 - ((totalThirdLevelNodes - 1) * NODE_VERTICAL_PADDING) / 2;
 
     // 遍历每个字段
-    validStructureEntries.forEach(([key, value]: [string, any]) => {
+    validStructureEntries.forEach(([key, value]: [string, StructureValue]) => {
       const fieldId = `field-${key}`;
       // 计算第二层节点的位置（居中于其子节点之间）
       const fieldYPosition = currentYPosition + 
@@ -166,6 +171,7 @@ export default function App() {
   const [edges, setEdges] = useState<Edge[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [currentId, setCurrentId] = useState<number>(127); // 添加当前ID的状态
+  console.log(promptData)
 
   const fetchPrompt = async (id: number) => {
     try {

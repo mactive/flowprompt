@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
 import type { Prompt } from '@/types/prompt';
+import { RowDataPacket } from 'mysql2/promise';
 
 type Props = {
-  params: {
-    id: string;
-  };
-};
+  params: Promise<{
+    id: string
+  }>
+}
+
+interface PromptRow extends RowDataPacket, Prompt {}
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   props: Props
 ) {
   try {
@@ -20,9 +23,11 @@ export async function GET(
       database: process.env.DB_NAME
     });
 
-    const id = props.params.id;
+    const params = await props.params
+    const id = parseInt(params.id);
+
     
-    const [rows] = await pool.execute<Prompt[]>(
+    const [rows] = await pool.execute<PromptRow[]>(
       'SELECT * FROM prompts WHERE id = ?',
       [id]
     );

@@ -1,20 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
+import { RowDataPacket } from 'mysql2/promise';
+import type { Prompt } from '@/types/prompt';
 
 type Props = {
-  params: {
-    id: string;
-  };
-};
+  params: Promise<{
+    id: string
+  }>
+}
+
+interface PromptRow extends RowDataPacket, Prompt {
+  id: number;
+}
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   props: Props
 ) {
-  const currentId = parseInt(props.params.id);
+  const params = await props.params
+  const currentId = parseInt(params.id);
 
   try {
-    const [rows] = await pool.execute<any[]>(
+    const [rows] = await pool.execute<PromptRow[]>(
       'SELECT id FROM prompts WHERE id > ? AND structure IS NOT NULL ORDER BY id ASC LIMIT 1',
       [currentId]
     );
