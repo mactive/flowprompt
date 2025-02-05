@@ -12,9 +12,8 @@ export default function App() {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [currentId, setCurrentId] = useState<number>(123); // 添加当前ID的状态
-  const [isLoading, setIsLoading] = useState(false);  // 添加 loading 状态
-  console.log(promptData)
+  const [currentId, setCurrentId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchPrompt = async (id: number) => {
     try {
@@ -51,8 +50,31 @@ export default function App() {
     }
   };
 
+  const fetchRandomId = async () => {
+    try {
+      const response = await fetch('/api/prompt/random');
+      if (!response.ok) {
+        throw new Error('Failed to fetch random prompt id');
+      }
+      const data = await response.json();
+      return data.id;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to get random prompt');
+      console.error('Error fetching random id:', err);
+      return null;
+    }
+  };
+
   useEffect(() => {
-    fetchPrompt(currentId);
+    const initializePrompt = async () => {
+      const randomId = await fetchRandomId();
+      if (randomId) {
+        setCurrentId(randomId);
+        await fetchPrompt(randomId);
+      }
+    };
+
+    initializePrompt();
   }, []);
 
   return (
@@ -74,6 +96,7 @@ export default function App() {
         >
           <span className="text">{isLoading ? 'Loading...' : 'Next Prompt'}</span>
         </button>
+        <div className="prompt-title">将Midjourney的提示词转换为16个维度的flow结构</div>
       </div>
       <ReactFlow 
         nodes={nodes} 
