@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import pool from '@/lib/db';
 import { RowDataPacket } from 'mysql2/promise';
-import type { Prompt } from '@/types/prompt';
 
-interface PromptRow extends RowDataPacket, Prompt {}
+interface PromptRow extends RowDataPacket {
+  id: number;
+}
 
 export async function GET() {
   try {
