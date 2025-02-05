@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ReactFlow, Node, Edge, Background } from '@xyflow/react';
+import { ReactFlow, Node, Edge, Background, BackgroundVariant } from '@xyflow/react';
 import type { Prompt } from '@/types/prompt';
 import { generateNodesAndEdges } from '@/utils/generateNodesAndEdges';
  
@@ -88,7 +88,7 @@ export default function App() {
           color="#aaa"
           gap={20}
           size={1}
-          variant="dots"  // 可选: "dots" | "lines" | "cross"
+          variant={BackgroundVariant.Dots}  // 可选: "dots" | "lines" | "cross"
         />
       </ReactFlow>
       {error && (
