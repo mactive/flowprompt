@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ReactFlow, Node, Edge } from '@xyflow/react';
 import type { Prompt } from '@/types/prompt';
-import { generateNodesAndEdges } from './utils/generateNodesAndEdges';
+import { generateNodesAndEdges } from '@/utils/generateNodesAndEdges';
  
 import '@xyflow/react/dist/style.css';
-import "./utils/xy-theme.css";
+import "../utils/xy-theme.css";
 
 export default function App() {
   const [promptData, setPromptData] = useState<Prompt | null>(null);
