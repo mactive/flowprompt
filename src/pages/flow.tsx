@@ -8,7 +8,7 @@ import "../utils/xy-theme.css";
 import "./flow.css";
 
 export default function App() {
-  const [promptData, setPromptData] = useState<Prompt | null>(null);
+  const [, setPromptData] = useState<Prompt | null>(null);
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [error, setError] = useState<string | null>(null);
