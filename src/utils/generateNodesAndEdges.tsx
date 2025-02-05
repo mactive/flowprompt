@@ -12,6 +12,7 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
   
   const LEVEL_PADDING = 400;
   const NODE_VERTICAL_PADDING = 50;
+  const EDGE_STROKE_COLOR = '#F0E8E3';  // 统一的边颜色
   
   // ... existing code ...
   nodes.push({
@@ -22,8 +23,9 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
     style: { 
       width: 250,
       padding: '10px',
-      border: '2px solid #2196f3',
+      border: '2px solid #8bcbff',
       borderRadius: '8px',
+      boxShadow: '0 0px 6px rgba(0,0,0, 0.2)',
       backgroundColor: '#e3f2fd',
       fontSize: promptData.prompt.length > 100 ? '14px' : '18px',
       fontFamily: 'PingFang SC, sans-serif',
@@ -55,7 +57,7 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
       id: 'image-node',
       type: 'default',
       draggable: true,  // 添加可拖动属性
-      position: { x: 50, y: 300 }, // 调整垂直位置
+      position: { x: 0, y: 300 }, // 调整垂直位置
       width: 300,
       height: 300,
       data: {
@@ -77,8 +79,9 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
       style: {
         width: 150,
         padding: '8px',
-        border: '2px solid #9c27b0',
+        border: '2px solid #8bcbff',
         borderRadius: '8px',
+        boxShadow: '0 0px 6px rgba(0,0,0, 0.2)',
         backgroundColor: '#f3e5f5'
       },
       targetPosition: Position.Top,
@@ -91,7 +94,7 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
       target: 'image-node',
       type: 'bezier',
       animated: true,
-      style: { stroke: '#9c27b0', strokeWidth: 2 }
+      style: { stroke: EDGE_STROKE_COLOR, strokeWidth: 1 }
     });
   }
 
@@ -129,8 +132,9 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
         style: { 
           width: 150,
           padding: '8px',
-          border: '2px solid #4caf50',
+          border: '2px solid #81d59c',
           borderRadius: '8px',
+          boxShadow: '0 0px 6px rgba(0,0,0, 0.2)',
           backgroundColor: '#f1f8e9'
         },
         targetPosition: Position.Left,
@@ -142,7 +146,7 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
         source: 'root',
         target: fieldId,
         type: 'bezier',
-        style: { stroke: '#2196f3', strokeWidth: 2 }
+        style: { stroke: EDGE_STROKE_COLOR, strokeWidth: 1 }
       });
 
       // 添加第三层节点
@@ -156,9 +160,10 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
           data: { label: item },
           style: { 
             width: 150,
-            padding: '8px',
-            border: '2px solid #ff9800',
+            padding: '4px 10px',
+            border: '2px solid #ffce84',
             borderRadius: '8px',
+            boxShadow: '0 0px 6px rgba(0,0,0, 0.2)',
             backgroundColor: '#fff3e0'
           },
           targetPosition: Position.Left,
@@ -170,7 +175,7 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
           source: fieldId,
           target: itemId,
           type: 'bezier',
-          style: { stroke: '#4caf50', strokeWidth: 2 }
+          style: { stroke: EDGE_STROKE_COLOR, strokeWidth: 1 }
         });
 
         currentYPosition += NODE_VERTICAL_PADDING;

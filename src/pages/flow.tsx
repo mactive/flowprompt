@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ReactFlow, Node, Edge } from '@xyflow/react';
+import { ReactFlow, Node, Edge, Background } from '@xyflow/react';
 import type { Prompt } from '@/types/prompt';
 import { generateNodesAndEdges } from '@/utils/generateNodesAndEdges';
  
 import '@xyflow/react/dist/style.css';
 import "../utils/xy-theme.css";
+import "./flow.css";
 
 export default function App() {
   const [promptData, setPromptData] = useState<Prompt | null>(null);
@@ -65,18 +66,13 @@ export default function App() {
         <button
           onClick={handleNextPrompt}
           disabled={isLoading}
+          className="button-64"
           style={{
-            padding: '20px 32px',
             backgroundColor: isLoading ? '#90caf9' : '#2196f3',  // loading 时颜色变浅
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
             cursor: isLoading ? 'not-allowed' : 'pointer',  // loading 时改变鼠标样式
-            fontSize: '32px',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
           }}
         >
-          {isLoading ? 'Loading...' : 'Next Prompt'}
+          <span className="text">{isLoading ? 'Loading...' : 'Next Prompt'}</span>
         </button>
       </div>
       <ReactFlow 
@@ -87,7 +83,14 @@ export default function App() {
         minZoom={0.2}
         maxZoom={1.5}
         attributionPosition="bottom-left"
-      />
+      >
+        <Background
+          color="#aaa"
+          gap={20}
+          size={1}
+          variant="dots"  // 可选: "dots" | "lines" | "cross"
+        />
+      </ReactFlow>
       {error && (
         <div style={{ 
           position: 'absolute', 
