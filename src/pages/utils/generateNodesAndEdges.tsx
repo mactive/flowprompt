@@ -17,16 +17,34 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
   nodes.push({
     id: 'root',
     type: 'default',
-    position: { x: 50, y: 300 },
+    position: { x: 50, y: 50 },
     data: { label: promptData.prompt },
     style: { 
       width: 250,
       padding: '10px',
       border: '2px solid #2196f3',
       borderRadius: '8px',
-      backgroundColor: '#e3f2fd'
+      backgroundColor: '#e3f2fd',
+      fontSize: promptData.prompt.length > 100 ? '14px' : '18px',
+      fontFamily: 'PingFang SC, sans-serif',
     },
     sourcePosition: Position.Right,
+    handles: [
+      {
+        id: 'handle-right',
+        type: 'source',
+        position: Position.Right,
+        x: 50,
+        y: 100,
+      },
+      {
+        id: 'handle-bottom',
+        type: 'source',
+        position: Position.Right,
+        x: 50,
+        y: 100,
+      },
+    ],
   });
 
   // 添加图片节点
@@ -36,12 +54,13 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
     nodes.push({
       id: 'image-node',
       type: 'default',
-      position: { x: 50, y: 450 }, // 调整垂直位置
-      width: 200,
-      height: 200,
+      draggable: true,  // 添加可拖动属性
+      position: { x: 50, y: 300 }, // 调整垂直位置
+      width: 300,
+      height: 300,
       data: {
         label: (
-          <div style={{ width: '200px', height: '200px', margin: '-10px 0 0 -10px' }}>
+          <div style={{ width: '300px', height: '300px', margin: '-10px 0 0 -10px' }}>
             <img
               src={imageUrl}
               alt="Prompt Image"
@@ -70,8 +89,9 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
       id: 'edge-root-image',
       source: 'root',
       target: 'image-node',
-      type: 'smoothstep',
-      style: { stroke: '#9c27b0' }
+      type: 'bezier',
+      animated: true,
+      style: { stroke: '#9c27b0', strokeWidth: 2 }
     });
   }
 
@@ -121,8 +141,8 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
         id: `edge-root-${fieldId}`,
         source: 'root',
         target: fieldId,
-        type: 'smoothstep',
-        style: { stroke: '#2196f3' }
+        type: 'bezier',
+        style: { stroke: '#2196f3', strokeWidth: 2 }
       });
 
       // 添加第三层节点
@@ -149,8 +169,8 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
           id: `edge-${fieldId}-${itemId}`,
           source: fieldId,
           target: itemId,
-          type: 'smoothstep',
-          style: { stroke: '#4caf50' }
+          type: 'bezier',
+          style: { stroke: '#4caf50', strokeWidth: 2 }
         });
 
         currentYPosition += NODE_VERTICAL_PADDING;

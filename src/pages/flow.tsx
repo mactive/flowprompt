@@ -4,13 +4,15 @@ import type { Prompt } from '@/types/prompt';
 import { generateNodesAndEdges } from './utils/generateNodesAndEdges';
  
 import '@xyflow/react/dist/style.css';
+import "./utils/xy-theme.css";
 
 export default function App() {
   const [promptData, setPromptData] = useState<Prompt | null>(null);
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [currentId, setCurrentId] = useState<number>(127); // 添加当前ID的状态
+  const [currentId, setCurrentId] = useState<number>(123); // 添加当前ID的状态
+  const [isLoading, setIsLoading] = useState(false);  // 添加 loading 状态
   console.log(promptData)
 
   const fetchPrompt = async (id: number) => {
@@ -43,6 +45,8 @@ export default function App() {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to get next prompt');
       console.error('Error fetching next prompt:', err);
+    } finally {
+      setIsLoading(false);  // 结束加载
     }
   };
 
@@ -54,24 +58,25 @@ export default function App() {
     <div style={{ width: '100vw', height: '100vh' }}>
       <div style={{ 
         position: 'absolute', 
-        bottom: 200, 
-        left: 200, 
+        bottom: 100, 
+        left: 150, 
         zIndex: 10 
       }}>
         <button
           onClick={handleNextPrompt}
+          disabled={isLoading}
           style={{
             padding: '20px 32px',
-            backgroundColor: '#2196f3',
+            backgroundColor: isLoading ? '#90caf9' : '#2196f3',  // loading 时颜色变浅
             color: 'white',
             border: 'none',
             borderRadius: '4px',
-            cursor: 'pointer',
+            cursor: isLoading ? 'not-allowed' : 'pointer',  // loading 时改变鼠标样式
             fontSize: '32px',
             boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
           }}
         >
-          Next Prompt
+          {isLoading ? 'Loading...' : 'Next Prompt'}
         </button>
       </div>
       <ReactFlow 

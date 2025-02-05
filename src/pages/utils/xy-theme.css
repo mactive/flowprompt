@@ -1,0 +1,7 @@
+.react-flow__resize-control.handle {
+  background-color: #ffffff;
+  border-color: #9E86ED;
+  border-radius: 0;
+  width: 5px;
+  height: 5px;
+}
