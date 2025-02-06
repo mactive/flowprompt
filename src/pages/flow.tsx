@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ReactFlow, Node, Edge, Background, BackgroundVariant } from '@xyflow/react';
+import { ReactFlow, Background, BackgroundVariant, MiniMap, Controls, useNodesState, useEdgesState, Node, Edge } from '@xyflow/react';
 import type { Prompt } from '@/types/prompt';
 import { generateNodesAndEdges } from '@/utils/generateNodesAndEdges';
  
@@ -7,11 +7,12 @@ import '@xyflow/react/dist/style.css';
 import "../utils/xy-theme.css";
 import "./flow.css";
 
+
 export default function App() {
-  const [promptData, setPromptData] = useState<Prompt | null>(null);
-  const [nodes, setNodes] = useState<Node[]>([]);
-  const [edges, setEdges] = useState<Edge[]>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [error, setError] = useState<string | null>(null);
+  const [promptData, setPromptData] = useState<Prompt | null>(null);
   const [currentId, setCurrentId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isEnglish, setIsEnglish] = useState(true);
@@ -153,12 +154,16 @@ export default function App() {
       <ReactFlow 
         nodes={nodes} 
         edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         fitView
         defaultViewport={{ x: 0, y: 0, zoom: 1 }}
         minZoom={0.2}
         maxZoom={1.5}
         attributionPosition="bottom-left"
       >
+        <MiniMap zoomable pannable />
+        <Controls />
         <Background
           color="#aaa"
           gap={20}

@@ -23,7 +23,7 @@ export const generateNodesAndEdges = (promptData: Prompt, isEnglish: boolean = t
   // ... existing code ...
   nodes.push({
     id: 'root',
-    type: 'default',
+    type: 'input',
     position: { x: 50, y: 50 },
     data: { label: isEnglish ? promptData.prompt : promptData.prompt_cn },
     style: { 
@@ -61,7 +61,7 @@ export const generateNodesAndEdges = (promptData: Prompt, isEnglish: boolean = t
     const imageUrl = promptData.image_url.replace(/\.com\//, '.com/midjourney/');
     nodes.push({
       id: 'image-node',
-      type: 'default',
+      type: 'output',
       draggable: true,  // 添加可拖动属性
       position: { x: 0, y: 300 }, // 调整垂直位置
       width: 300,
@@ -161,7 +161,7 @@ export const generateNodesAndEdges = (promptData: Prompt, isEnglish: boolean = t
         
         nodes.push({
           id: itemId,
-          type: 'default',
+          type: 'output',
           position: { x: LEVEL_PADDING * 1.5, y: currentYPosition },
           data: { label: item },
           style: { 

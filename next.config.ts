@@ -6,7 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: '**',
+        protocol: 'https',
+        hostname: 'prompt-image-1257969197.cos.ap-beijing.myqcloud.com',
+        pathname: '/midjourney/**',
       },
     ],
   },
