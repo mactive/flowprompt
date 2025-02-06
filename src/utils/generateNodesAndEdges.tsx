@@ -18,7 +18,7 @@ export const generateNodesAndEdges = (promptData: Prompt, isEnglish: boolean = t
   
   const LEVEL_PADDING = 400;
   const NODE_VERTICAL_PADDING = 50;
-  const EDGE_STROKE_COLOR = '#F0E8E3';  // 统一的边颜色
+  const EDGE_STROKE_COLOR = '#e9cfbf';  // 统一的边颜色
   
   // ... existing code ...
   nodes.push({

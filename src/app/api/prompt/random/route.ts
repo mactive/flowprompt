@@ -10,7 +10,7 @@ export async function GET() {
   try {
     // 查询一个随机的带有 structure 的提示
     const [rows] = await pool.execute<PromptRow[]>(
-      'SELECT id FROM prompts WHERE structure IS NOT NULL ORDER BY RAND() LIMIT 1'
+      'SELECT id FROM prompts WHERE structure IS NOT NULL AND LENGTH(structure) > 50 ORDER BY RAND() LIMIT 1'
     );
 
     if (!rows || rows.length === 0) {
