@@ -58,7 +58,9 @@ export const generateNodesAndEdges = (promptData: Prompt, isEnglish: boolean = t
   // 添加图片节点
   if (promptData.image_url) {
     // 将图片URL中的域名替换为midjourney
-    const imageUrl = promptData.image_url.replace(/\.com\//, '.com/midjourney/');
+      /* https://prompt-image-1257969197.picbj.myqcloud.com/midjourney/000d26c9-69fc-40c2-8274-48957584da7f.jpeg/jpg_75*/
+    const imageUrl = 'https://prompt-image-1257969197.picbj.myqcloud.com/midjourney/'+promptData.source_id+'.jpeg/jpg_75'
+    // const imageUrl = promptData.image_url.replace(/\.com\//, '.com/midjourney/');
     nodes.push({
       id: 'image-node',
       type: 'output',
