@@ -1,12 +1,18 @@
 import { Node, Edge, Position } from '@xyflow/react';
 import type { Prompt } from '@/types/prompt';
+import structureKeyConfig from './structure_key.json';
+import Image from 'next/image';
 
 interface StructureValue {
   en: string[];
   cn: string[];
 }
 
-export const generateNodesAndEdges = (promptData: Prompt) => {
+interface StructureKeyConfig {
+  [key: string]: string;
+}
+
+export const generateNodesAndEdges = (promptData: Prompt, isEnglish: boolean = true) => {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
   
@@ -19,7 +25,7 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
     id: 'root',
     type: 'default',
     position: { x: 50, y: 50 },
-    data: { label: promptData.prompt },
+    data: { label: isEnglish ? promptData.prompt : promptData.prompt_cn },
     style: { 
       width: 250,
       padding: '10px',
@@ -62,13 +68,13 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
       height: 300,
       data: {
         label: (
-          <div style={{ width: '300px', height: '300px', margin: '-10px 0 0 -10px' }}>
-            <img
+          <div style={{ width: '300px', height: '300px', margin: '-10px 0 0 -10px', position: 'relative' }}>
+            <Image
               src={imageUrl}
               alt="Prompt Image"
+              fill
+              sizes="300px"
               style={{
-                width: '100%',
-                height: '100%',
                 objectFit: 'cover',
                 borderRadius: '4px'
               }}
@@ -128,7 +134,7 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
         id: fieldId,
         type: 'default',
         position: { x: LEVEL_PADDING, y: fieldYPosition },
-        data: { label: key },
+        data: { label: isEnglish ? key : (structureKeyConfig as StructureKeyConfig)[key] || key },
         style: { 
           width: 150,
           padding: '8px',
@@ -150,7 +156,7 @@ export const generateNodesAndEdges = (promptData: Prompt) => {
       });
 
       // 添加第三层节点
-      value.en.forEach((item: string, itemIndex: number) => {
+      value[isEnglish ? 'en' : 'cn'].forEach((item: string, itemIndex: number) => {
         const itemId = `item-${key}-${itemIndex}`;
         
         nodes.push({
