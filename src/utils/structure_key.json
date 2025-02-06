@@ -1,0 +1,18 @@
+{
+  "artwork_type": "作品类型",
+  "subject_matter": "主体内容",
+  "background_description": "背景描述",
+  "artist_reference": "艺术家引用",
+  "style_characteristics": "风格特征",
+  "color_description": "色彩描述",
+  "technique_description": "技法描述",
+  "lighting_effects": "光线效果",
+  "composition_elements": "构图元素",
+  "texture_material": "材质和质地",
+  "mood_atmosphere": "氛围/情绪",
+  "temporal_setting": "时间设定",
+  "technical_parameters": "技术参数",
+  "medium": "艺术媒介",
+  "style_reference": "风格参考",
+  "detail_level": "细节层次"
+}
