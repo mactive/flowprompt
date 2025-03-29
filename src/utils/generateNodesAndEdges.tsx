@@ -76,6 +76,7 @@ export const generateNodesAndEdges = (promptData: Prompt, isEnglish: boolean = t
               alt="Prompt Image"
               fill
               sizes="300px"
+              unoptimized={true}
               style={{
                 objectFit: 'cover',
                 borderRadius: '4px'
