@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
 import { RowDataPacket } from 'mysql2/promise';
 import type { Prompt } from '@/types/prompt';
-
+export const runtime = 'edge'; 
 type Props = {
   params: Promise<{
     id: string

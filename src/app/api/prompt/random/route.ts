@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import pool from '@/lib/db';
 import { RowDataPacket } from 'mysql2/promise';
-
+export const runtime = 'edge'; 
 interface PromptRow extends RowDataPacket {
   id: number;
 }

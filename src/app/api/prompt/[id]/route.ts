@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
 import type { Prompt } from '@/types/prompt';
 import { RowDataPacket } from 'mysql2/promise';
+export const runtime = 'edge'; 
 
 type Props = {
   params: Promise<{
@@ -48,4 +49,4 @@ export async function GET(
       { status: 500 }
     );
   }
-} 
+}
